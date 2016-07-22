@@ -48,7 +48,7 @@ public class Settings {
 
     public static final int VERSION = 172;
 
-    public static final int LENGTH_OF_SETTINGS_DATA = 35;
+    public static final int LENGTH_OF_SETTINGS_DATA = 36;
 
     private CustomNamesSet customNames;
 
@@ -144,6 +144,8 @@ public class Settings {
     private boolean randomizeTrainerClassNames;
     private boolean trainersForceFullyEvolved;
     private int trainersForceFullyEvolvedLevel = 30;
+    private boolean trainersLevelModified;
+    private int trainersLevelModifier = 0; // -50 ~ 50
 
     public enum WildPokemonMod {
         UNCHANGED, RANDOM, AREA_MAPPING, GLOBAL_MAPPING
@@ -379,6 +381,9 @@ public class Settings {
 
         }
 
+        // @ 35 trainer pokemon level modifier
+        out.write((trainersLevelModified ? 0x80 : 0) | (trainersLevelModifier+50));
+
         try {
             byte[] romName = this.romName.getBytes("US-ASCII");
             out.write(romName.length);
@@ -572,6 +577,9 @@ public class Settings {
 
         settings.setCurrentMiscTweaks(codeTweaks);
 
+        settings.setTrainersLevelModified(restoreState(data[35], 7));
+        settings.setTrainersLevelModifier((data[35] & 0x7F) - 50);
+
         int romNameLength = data[LENGTH_OF_SETTINGS_DATA] & 0xFF;
         String romName = new String(data, LENGTH_OF_SETTINGS_DATA + 1, romNameLength, "US-ASCII");
         settings.setRomName(romName);
@@ -699,11 +707,11 @@ public class Settings {
     }
 
     // getters and setters
-    
+
     public CustomNamesSet getCustomNames() {
         return customNames;
     }
-    
+
     public Settings setCustomNames(CustomNamesSet customNames) {
         this.customNames = customNames;
         return this;
@@ -1184,6 +1192,24 @@ public class Settings {
 
     public Settings setTrainersForceFullyEvolvedLevel(int trainersForceFullyEvolvedLevel) {
         this.trainersForceFullyEvolvedLevel = trainersForceFullyEvolvedLevel;
+        return this;
+    }
+
+    public boolean isTrainersLevelModified() {
+        return trainersLevelModified;
+    }
+
+    public Settings setTrainersLevelModified(boolean trainersLevelModified) {
+        this.trainersLevelModified = trainersLevelModified;
+        return this;
+    }
+
+    public int getTrainersLevelModifier() {
+        return trainersLevelModifier;
+    }
+
+    public Settings setTrainersLevelModifier(int trainersLevelModifier) {
+        this.trainersLevelModifier = trainersLevelModifier;
         return this;
     }
 

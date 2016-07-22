@@ -795,6 +795,9 @@ public class RandomizerGUI extends javax.swing.JFrame {
         this.tpUnchangedRB.setEnabled(false);
         this.tpForceFullyEvolvedCB.setEnabled(false);
         this.tpForceFullyEvolvedSlider.setEnabled(false);
+        this.tpLevelModifierCB.setEnabled(false);
+        this.tpLevelModifierSlider.setEnabled(false);
+
         this.tpUnchangedRB.setSelected(true);
         this.tpPowerLevelsCB.setSelected(false);
         this.tpRivalCarriesStarterCB.setSelected(false);
@@ -803,6 +806,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
         this.tpNoEarlyShedinjaCB.setSelected(false);
         this.tpForceFullyEvolvedCB.setSelected(false);
         this.tpForceFullyEvolvedSlider.setValue(this.tpForceFullyEvolvedSlider.getMinimum());
+        this.tpLevelModifierCB.setSelected(false);
+        this.tpLevelModifierSlider.setValue(0);
 
         this.tnRandomizeCB.setEnabled(false);
         this.tcnRandomizeCB.setEnabled(false);
@@ -1345,11 +1350,14 @@ public class RandomizerGUI extends javax.swing.JFrame {
             this.tpNoEarlyShedinjaCB.setSelected(false);
             this.tpForceFullyEvolvedCB.setEnabled(false);
             this.tpForceFullyEvolvedCB.setSelected(false);
+            this.tpLevelModifierCB.setEnabled(false);
+            this.tpLevelModifierCB.setSelected(false);
         } else {
             this.tpPowerLevelsCB.setEnabled(true);
             this.tpNoLegendariesCB.setEnabled(true);
             this.tpNoEarlyShedinjaCB.setEnabled(true);
             this.tpForceFullyEvolvedCB.setEnabled(true);
+            this.tpLevelModifierCB.setEnabled(true);
         }
 
         if (this.tpForceFullyEvolvedCB.isSelected()) {
@@ -1357,6 +1365,13 @@ public class RandomizerGUI extends javax.swing.JFrame {
         } else {
             this.tpForceFullyEvolvedSlider.setEnabled(false);
             this.tpForceFullyEvolvedSlider.setValue(this.tpForceFullyEvolvedSlider.getMinimum());
+        }
+
+        if (this.tpLevelModifierCB.isSelected()) {
+            this.tpLevelModifierSlider.setEnabled(true);
+        } else {
+            this.tpLevelModifierSlider.setEnabled(false);
+            this.tpLevelModifierSlider.setValue(0);
         }
 
         if (!this.spUnchangedRB.isSelected() || !this.tpUnchangedRB.isSelected()) {
@@ -1692,6 +1707,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
         this.tpNoEarlyShedinjaCB.setSelected(settings.isTrainersBlockEarlyWonderGuard());
         this.tpForceFullyEvolvedCB.setSelected(settings.isTrainersForceFullyEvolved());
         this.tpForceFullyEvolvedSlider.setValue(settings.getTrainersForceFullyEvolvedLevel());
+        this.tpLevelModifierCB.setSelected(settings.isTrainersLevelModified());
+        this.tpLevelModifierSlider.setValue(settings.getTrainersLevelModifier());
 
         this.wpARCatchEmAllRB
                 .setSelected(settings.getWildPokemonRestrictionMod() == Settings.WildPokemonRestrictionMod.CATCH_EM_ALL);
@@ -1844,6 +1861,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
         settings.setTrainersBlockEarlyWonderGuard(tpNoEarlyShedinjaCB.isSelected());
         settings.setTrainersForceFullyEvolved(tpForceFullyEvolvedCB.isSelected());
         settings.setTrainersForceFullyEvolvedLevel(tpForceFullyEvolvedSlider.getValue());
+        settings.setTrainersLevelModified(tpLevelModifierCB.isSelected());
+        settings.setTrainersLevelModifier(tpLevelModifierSlider.getValue());
 
         settings.setWildPokemonMod(wpUnchangedRB.isSelected(), wpRandomRB.isSelected(), wpArea11RB.isSelected(),
                 wpGlobalRB.isSelected());
@@ -2478,6 +2497,10 @@ public class RandomizerGUI extends javax.swing.JFrame {
         this.enableOrDisableSubControls();
     }// GEN-LAST:event_tpForceFullyEvolvedCBActionPerformed
 
+    private void tpLevelModifierCBActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tpForceFullyEvolvedCBActionPerformed
+        this.enableOrDisableSubControls();
+    }
+
     private void wpCatchRateCBActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_wpCatchRateCBActionPerformed
         this.enableOrDisableSubControls();
     }// GEN-LAST:event_wpCatchRateCBActionPerformed
@@ -2654,6 +2677,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
         tpNoEarlyShedinjaCB = new javax.swing.JCheckBox();
         tpForceFullyEvolvedCB = new javax.swing.JCheckBox();
         tpForceFullyEvolvedSlider = new javax.swing.JSlider();
+        tpLevelModifierCB = new javax.swing.JCheckBox();
+        tpLevelModifierSlider = new javax.swing.JSlider();
         wildsInnerPanel = new javax.swing.JPanel();
         wildPokemonPanel = new javax.swing.JPanel();
         wpUnchangedRB = new javax.swing.JRadioButton();
@@ -3717,6 +3742,23 @@ public class RandomizerGUI extends javax.swing.JFrame {
         tpForceFullyEvolvedSlider.setToolTipText(bundle.getString("RandomizerGUI.tpForceFullyEvolvedSlider.toolTipText")); // NOI18N
         tpForceFullyEvolvedSlider.setValue(30);
 
+        tpLevelModifierCB.setText(bundle.getString("RandomizerGUI.tpLevelModifierCB.text")); // NOI18N
+        tpLevelModifierCB.setToolTipText(bundle.getString("RandomizerGUI.tpLevelModifierCB.toolTipText")); // NOI18N
+        tpLevelModifierCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tpLevelModifierCBActionPerformed(evt);
+            }
+        });
+
+        tpLevelModifierSlider.setMajorTickSpacing(10);
+        tpLevelModifierSlider.setMaximum(50);
+        tpLevelModifierSlider.setMinimum(-50);
+        tpLevelModifierSlider.setMinorTickSpacing(2);
+        tpLevelModifierSlider.setPaintLabels(true);
+        tpLevelModifierSlider.setPaintTicks(true);
+        tpLevelModifierSlider.setToolTipText(bundle.getString("RandomizerGUI.tpLevelModifierSlider.toolTipText")); // NOI18N
+        tpLevelModifierSlider.setValue(0);
+
         javax.swing.GroupLayout trainersPokemonPanelLayout = new javax.swing.GroupLayout(trainersPokemonPanel);
         trainersPokemonPanel.setLayout(trainersPokemonPanelLayout);
         trainersPokemonPanelLayout.setHorizontalGroup(
@@ -3742,7 +3784,9 @@ public class RandomizerGUI extends javax.swing.JFrame {
                             .addComponent(tnRandomizeCB)
                             .addComponent(tcnRandomizeCB)
                             .addComponent(tpForceFullyEvolvedCB)
-                            .addComponent(tpForceFullyEvolvedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(tpForceFullyEvolvedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tpLevelModifierCB)
+                            .addComponent(tpLevelModifierSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(143, Short.MAX_VALUE))
         );
         trainersPokemonPanelLayout.setVerticalGroup(
@@ -3769,6 +3813,10 @@ public class RandomizerGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tpNoEarlyShedinjaCB))
                     .addComponent(tpForceFullyEvolvedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tpLevelModifierCB)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tpLevelModifierSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -3785,8 +3833,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
             trainersInnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(trainersInnerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(trainersPokemonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addComponent(trainersPokemonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(180, Short.MAX_VALUE))
         );
 
         randomizerOptionsPane.addTab(bundle.getString("RandomizerGUI.trainersInnerPanel.TabConstraints.tabTitle"), trainersInnerPanel); // NOI18N
@@ -4726,6 +4774,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem toggleScrollPaneMenuItem;
     private javax.swing.JCheckBox tpForceFullyEvolvedCB;
     private javax.swing.JSlider tpForceFullyEvolvedSlider;
+    private javax.swing.JCheckBox tpLevelModifierCB;
+    private javax.swing.JSlider tpLevelModifierSlider;
     private javax.swing.JCheckBox tpNoEarlyShedinjaCB;
     private javax.swing.JCheckBox tpNoLegendariesCB;
     private javax.swing.JCheckBox tpPowerLevelsCB;
